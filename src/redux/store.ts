@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import indexReducer from "./indexSlice";
+import recordingReducer from "./recordingSlice";
 
 export const store = configureStore({
     reducer: {
-        indexTracker: indexReducer
+        indexTracker: indexReducer,
+        recordingTracker: recordingReducer,
     }
 });
 

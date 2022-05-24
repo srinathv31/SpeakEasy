@@ -7,7 +7,7 @@ import styles from "../styles/pageStyles";
 export default function MiddleScreen(): JSX.Element {
     return(
         <View style={styles.container}>
-            <Text>Start Talking</Text>
+            <Text>Press to Start Recording</Text>
             <RecordButton />
         </View>
     );
