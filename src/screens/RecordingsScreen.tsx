@@ -4,7 +4,7 @@ import { Text, View } from "react-native";
 import styles from "../styles/pageStyles";
 import Icon from "react-native-vector-icons/Ionicons";
 
-export default function LeftScreen(): JSX.Element {
+export default function RecordingsScreen(): JSX.Element {
     return(
         <View style={styles.container}>
             <Text>All Recordings</Text>

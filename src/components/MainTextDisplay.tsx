@@ -1,20 +1,24 @@
 // Source Imports
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text } from "react-native";
 
 // Redux Imports
 import { useAppSelector } from "../redux/hooks";
 
-export default function MainTextDisplay(): JSX.Element {
+export default function MainTextDisplay({ text }: {
+    text: string
+}): JSX.Element {
     const isRecording = useAppSelector(state => state.recordingTracker.value);
 
     return(
-        <View>
-            {isRecording === false ? 
+        <>
+            {isRecording === false && text === "" ? 
                 <Text style={styles.indicatorText}>Press to Start Recording</Text> :
-                <Text style={styles.speechText}>Text To Speech</Text>
+                <ScrollView style={{ backgroundColor: "pink" }}>
+                    <Text style={styles.speechText}>{text}</Text>
+                </ScrollView>
             }
-        </View>
+        </>
     );
 }
 
