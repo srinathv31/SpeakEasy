@@ -14,7 +14,7 @@ export default function MainTextDisplay({ text }: {
         <>
             {isRecording === false && text === "" ? 
                 <Text style={styles.indicatorText}>Press to Start Recording</Text> :
-                <ScrollView style={{ backgroundColor: "pink" }}>
+                <ScrollView style={{ margin: 5 }}>
                     <Text style={styles.speechText}>{text}</Text>
                 </ScrollView>
             }
@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
     speechText: {
-        fontSize: 40
+        fontSize: 40,
+        fontWeight: "300"
     }
 });
