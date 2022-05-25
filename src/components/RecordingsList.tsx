@@ -1,20 +1,20 @@
 // Source Imports
-import React, { useState } from "react";
+import React from "react";
 import { FlatList, View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import RecordingItem from "../interfaces/Recording";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { toggleExpand } from "../redux/recordingListSlice";
 import ExpandedRecording from "./ExpandedRecording";
 
 export default function RecordingsList(): JSX.Element {
-    const [data, setData] = useState<{ name: string, expand: boolean }[]>([
-        { name: "Recording 1", expand: false },
-        { name: "Recording 2", expand: false },
-        { name: "Recording 3", expand: false },
-    ]);
+    const recordingList = useAppSelector(state => state.recordingListTracker.value);
+    const dispatch = useAppDispatch();
 
     const renderItem = ({ item, index }: {
-        item: { name: string, expand: boolean }, index: number
+        item: RecordingItem, index: number
     }) => {
         return (
-            <TouchableOpacity onPress={() => expandRecording(item)}>
+            <TouchableOpacity onPress={() => dispatch(toggleExpand(item))}>
                 <View key={index} style={styles.item}>
                     <Text style={styles.title}>{item.name}</Text>
                     <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "baseline" }}>
@@ -27,22 +27,9 @@ export default function RecordingsList(): JSX.Element {
         );
     };
 
-    function expandRecording(item: { name: string, expand: boolean }) {
-        const dataCopy = [ ...data ];
-
-        dataCopy.forEach(recording => {
-            recording.expand = false;
-            if (recording === item) {
-                recording.expand = true;
-            }
-        });
-        setData(dataCopy);
-        console.log(data);
-    }
-
     return(
         <FlatList
-            data={data}
+            data={recordingList}
             renderItem={renderItem}
         />
     );
