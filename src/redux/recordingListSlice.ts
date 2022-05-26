@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import RecordingItem from "../interfaces/Recording";
+import { getMonthString } from "../utilities/calculateMonth";
 import { RootState } from "./store";
 
 interface RecordingListState {
@@ -24,9 +25,11 @@ export const recordingListSlice = createSlice({
             });
         },
         addRecording: (state, action: PayloadAction<string>) => {
-            const recording = { name: "", expand: false, audioFile: "", textFile: "", timeLength: "3:31 PM", date: "May 17, 2019" };
+            const todayDate = new Date();
+            const recording = { name: "", expand: false, audioFile: "", textFile: "", timeLength: "3:31", date: "May 17, 2019" };
             recording.name = `Recording ${state.value.length+1}`;
             recording.textFile = action.payload;
+            recording.date = `${getMonthString(todayDate.getMonth()+1)} ${todayDate.getDate()}, ${todayDate.getFullYear()}`;
             state.value.push(recording);
         },
     }
