@@ -5,6 +5,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 // Redux Imports
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { toggleValue } from "../redux/recordingSlice";
+import { addRecording } from "../redux/recordingListSlice";
 
 import Voice, { SpeechEndEvent, SpeechResultsEvent, SpeechStartEvent } from "@react-native-voice/voice";
 import { View } from "react-native";
@@ -52,12 +53,13 @@ export default function RecordButton(): JSX.Element {
     };
     
     const stopRecording = async () => {
-        setResult("");
+        dispatch(addRecording(result));
         try {
             await Voice.stop();
         } catch (error) {
             console.log("error raised", error);
         }
+        setResult("");
     };
 
     useEffect(() => {

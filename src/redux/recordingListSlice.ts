@@ -7,11 +7,7 @@ interface RecordingListState {
 }
 
 const initialState: RecordingListState = {
-    value: [
-        { name: "Recording 1", expand: false, audioFile: "", textFile: "", timeLength: "3:31 PM", date: "May 17, 2019" },
-        { name: "Recording 2", expand: false, audioFile: "", textFile: "", timeLength: "3:35 PM", date: "May 17, 2019" },
-        { name: "Recording 3", expand: false, audioFile: "", textFile: "", timeLength: "3:47 PM", date: "May 17, 2019" },
-    ]
+    value: []
 };
 
 export const recordingListSlice = createSlice({
@@ -20,16 +16,23 @@ export const recordingListSlice = createSlice({
     reducers: {
         toggleExpand: (state, action: PayloadAction<RecordingItem>) => {
             state.value.forEach(recording => {
-                recording.expand = false;
                 if (recording.name === action.payload.name) {
-                    recording.expand = true;
+                    recording.expand === true ? recording.expand = false : recording.expand = true;
+                } else {
+                    recording.expand = false;
                 }
             });
-        }
+        },
+        addRecording: (state, action: PayloadAction<string>) => {
+            const recording = { name: "", expand: false, audioFile: "", textFile: "", timeLength: "3:31 PM", date: "May 17, 2019" };
+            recording.name = `Recording ${state.value.length+1}`;
+            recording.textFile = action.payload;
+            state.value.push(recording);
+        },
     }
 });
 
-export const { toggleExpand } = recordingListSlice.actions;
+export const { toggleExpand, addRecording } = recordingListSlice.actions;
 
 export const selectRecordingList = (state: RootState) => state.recordingListTracker.value;
 

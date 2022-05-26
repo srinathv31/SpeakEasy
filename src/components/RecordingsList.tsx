@@ -14,16 +14,18 @@ export default function RecordingsList(): JSX.Element {
         item: RecordingItem, index: number
     }) => {
         return (
-            <TouchableOpacity onPress={() => dispatch(toggleExpand(item))}>
+            <>
                 <View key={index} style={styles.item}>
-                    <Text style={styles.title}>{item.name}</Text>
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "baseline" }}>
-                        <Text>May 17, 2019</Text>
-                        <Text>3:02</Text>
-                    </View>
-                    {item.expand && <ExpandedRecording />}
+                    <TouchableOpacity onPress={() => dispatch(toggleExpand(item))}>
+                        <Text style={styles.title}>{item.name}</Text>
+                        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "baseline" }}>
+                            <Text>{item.date}</Text>
+                            <Text>{item.timeLength}</Text>
+                        </View>
+                    </TouchableOpacity>
+                    {item.expand && <ExpandedRecording item={item}/>}
                 </View>
-            </TouchableOpacity>
+            </>
         );
     };
 
@@ -37,6 +39,7 @@ export default function RecordingsList(): JSX.Element {
 
 const styles = StyleSheet.create({
     item: {
+        flex: 1,
         // backgroundColor: "#f9c2ff",
         borderBottomColor: "#e0e0de",
         borderBottomWidth: 1,
