@@ -12,7 +12,7 @@ export default function SearchBar({ setQuery, query }: {
                 style={styles.input}
                 onChangeText={setQuery}
                 value={query}
-                placeholder="Search Recording"
+                placeholder="Search Recordings"
                 placeholderTextColor={"gray"}
                 returnKeyType="search"
                 clearButtonMode="always"
