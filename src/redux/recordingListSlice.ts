@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import RecordingItem from "../interfaces/Recording";
 import { getMonthString } from "../utilities/calculateMonth";
+import { findDuplicateNamesInList } from "../utilities/searchList";
 import { RootState } from "./store";
 
 interface RecordingListState {
@@ -26,16 +27,19 @@ export const recordingListSlice = createSlice({
         },
         addRecording: (state, action: PayloadAction<string>) => {
             const todayDate = new Date();
-            const recording = { name: "", expand: false, audioFile: "", textFile: "", timeLength: "3:31", date: "May 17, 2019" };
-            recording.name = `Recording ${state.value.length+1}`;
+            const recording = { name: "", expand: false, audioFile: "", textFile: "", timeLength: "3:31", date: "" };
+            recording.name = findDuplicateNamesInList(state.value, `Recording ${state.value.length+1}`);
             recording.textFile = action.payload;
             recording.date = `${getMonthString(todayDate.getMonth()+1)} ${todayDate.getDate()}, ${todayDate.getFullYear()}`;
             state.value.push(recording);
         },
+        deleteRecording: (state, action: PayloadAction<RecordingItem>) => {
+            state.value = state.value.filter(item => item.name !== action.payload.name);
+        }
     }
 });
 
-export const { toggleExpand, addRecording } = recordingListSlice.actions;
+export const { toggleExpand, addRecording, deleteRecording } = recordingListSlice.actions;
 
 export const selectRecordingList = (state: RootState) => state.recordingListTracker.value;
 
