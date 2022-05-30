@@ -10,12 +10,18 @@ export default function MainTextDisplay({ text }: {
 }): JSX.Element {
     const isRecording = useAppSelector(state => state.recordingTracker.value);
 
+    const wordsToMark = ["test", "like", "so", "i", "me", "just"];
+
     return(
         <>
             {isRecording === false && text === "" ? 
                 <Text style={styles.indicatorText}>Press to Start Recording</Text> :
                 <ScrollView style={{ margin: 5 }}>
-                    <Text style={styles.speechText}>{text}</Text>
+                    <Text style={styles.speechText}>{text.split(" ").map((word, ind) => 
+                        <Text key={ind} style={{ color: wordsToMark.includes(word.toLowerCase()) ? "crimson": "black" }}>
+                            {word+ " "}
+                        </Text>)
+                    }</Text>
                 </ScrollView>
             }
         </>

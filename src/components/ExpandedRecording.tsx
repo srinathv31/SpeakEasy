@@ -11,6 +11,8 @@ export default function ExpandedRecording({ item }: {
 }): JSX.Element {
     const dispatch = useAppDispatch();
 
+    const wordsToMark = ["test", "like", "so", "i", "me", "just"];
+
     return(
         <View style={{ flex: 1 }}>
             <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "baseline", marginVertical: 20 }}>
@@ -18,7 +20,11 @@ export default function ExpandedRecording({ item }: {
                 <Icon onPress={() => dispatch(deleteRecording(item))} name="more-horizontal" size={20}></Icon>
             </View>
             <ScrollView style={{ flex: 1 }}>
-                <Text style={{ fontSize: 20 }}>{item.textFile}</Text>
+                <Text style={{ fontSize: 20 }}>{item.textFile.split(" ").map((word, ind) => 
+                    <Text key={ind} style={{ color: wordsToMark.includes(word.toLowerCase()) ? "crimson": "black" }}>
+                        {word+ " "}
+                    </Text>)
+                }</Text>
             </ScrollView>
         </View>
     );
